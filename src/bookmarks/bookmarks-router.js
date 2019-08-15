@@ -22,7 +22,7 @@ bookmarksRouter
         };
 
         bookmarks.push(bookmark);
-        logger.info(`Book mark with id ${id} created`);
+        logger.info(`Bookmark with id ${id} created`);
 
         if (!title) {
             logger.error(`Title is required`);
@@ -37,6 +37,10 @@ bookmarksRouter
                 .status(400)
                 .send('Content is required');
         }
+
+        const newBookmark = bookmarks.find(bookmark => bookmark.id == id);
+
+        res.send(newBookmark);
     });
 
 bookmarksRouter
@@ -51,6 +55,8 @@ bookmarksRouter
                     .status(404)
                     .send('Bookmark not found');
         }
+
+        res.send(bookmarkList);
         
     })
     .delete((req, res) => {
@@ -70,8 +76,9 @@ bookmarksRouter
         logger.info(`Bookmark with id ${id} deleted.`);
         res
             .status(204)
-            .end();
+            .send(`Bookmark with id ${id} successfully deleted`);
             
+        
 
     });
 
